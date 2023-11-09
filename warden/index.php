@@ -1,24 +1,28 @@
+<?php global $conn;
+require '../include/conn.php'; ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"
+    <title>Menu</title>
+</head>
+<body>
+<table>
+    <td>SISTEM PERALATAN DAN ELEKTRIK</td>
+    <td><a href="index.php?menu=home">HOME</a>
+        <a href="index.php?menu=product">SENARAI PELAJAR</a>
+        <a href="index.php?menu=about">SENARAI PERALATAN</a></td>
+</table>
 <?php
-require 'conn.php';
-
-if ($conn->connect_error) {
-    die("Sambungan ke pangkalan data gagal: " . $conn->connect_error);
+$menu = 'home'; #default value
+if (isset($_GET['menu'])) {
+    $menu=$_GET['menu'];
 }
-
-$idpelajar = $_POST['idpelajar'];
-
-$sql = "SELECT PERALATAN FROM idperalatan WHERE idpelajar = $idpelajar";
-
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "Senarai peralatan milik pelajar ID $idpelajar:<br>";
-    while ($row = $result->fetch_assoc()) {
-        echo $row["idperalatan"] . "<br>";
-    }
-} else {
-    echo "Tiada peralatan dijumpai untuk pelajar ID $idpelajar.";
-}
-
-$conn->close();
+include "$menu.php";
 ?>
+
+</body>
+</html>
